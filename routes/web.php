@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SanPhamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index']);
+
+Route::prefix('san-pham')->group(function() {
+    Route::get('/', [SanPhamController::class, 'index']);
+    Route::get('chi-tiet/{ten_url}', [SanPhamController::class, 'chi_tiet'])->where('ten_url', '[a-zA-Z0-9-]+');
+});
+
+Route::get('admin', function () {
+    return view('GentelellaMaster');
 });
