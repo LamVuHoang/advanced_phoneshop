@@ -72,8 +72,8 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/san-pham') }}">Shop</a></li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
@@ -144,15 +144,15 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="{{ URL::asset('storage/ogani_resources') }}/img/logo.png"
-                                alt=""></a>
+                        <a href="{{ url('/') }}"><img
+                                src="{{ URL::asset('storage/ogani_resources') }}/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                            <li><a href="{{ url('/san-pham') }}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
@@ -198,7 +198,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img
+                            <a href="{{ url('/') }}"><img
                                     src="{{ URL::asset('storage/ogani_resources') }}/img/logo.png" alt=""></a>
                         </div>
                         <ul>

@@ -1,9 +1,8 @@
 @extends('OganiMaster')
 
+@section('title', $product->ten_san_pham)
+
 @section('content')
-    <h1>
-        {{ $product->thuong_hieu->ten_thuong_hieu }}
-    </h1>
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
@@ -59,7 +58,7 @@
                         <h2>{{ $product->ten_san_pham }}</h2>
                         <div class="breadcrumb__option">
                             <a href="{{ url('/') }}">Home</a>
-                            <a href="./index.html">Vegetables</a>
+                            <a href="./index.html">{{ $product->thuong_hieu->ten_thuong_hieu }}</a>
                             <span>{{ $product->ten_san_pham }}</span>
                         </div>
                     </div>
@@ -77,18 +76,21 @@
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                src="{{ URL::asset('storage/ogani_resources') }}/img/product/details/product-details-1.jpg"
-                                alt="">
+                                src="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh1 }}" alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="img/product/details/product-details-2.jpg"
-                                src="{{ URL::asset('storage/ogani_resources') }}/img/product/details/thumb-1.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-3.jpg"
-                                src="{{ URL::asset('storage/ogani_resources') }}/img/product/details/thumb-2.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                                src="{{ URL::asset('storage/ogani_resources') }}/img/product/details/thumb-3.jpg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-4.jpg"
-                                src="{{ URL::asset('storage/ogani_resources') }}/img/product/details/thumb-4.jpg" alt="">
+                            <img data-imgbigurl="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh1 }}"
+                                src="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh1 }}" alt="">
+                            @if ($product->hinh2)
+                                <img data-imgbigurl="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh2 }}"
+                                    src="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh2 }}"
+                                    alt="">
+                            @endif
+                            @if ($product->hinh3)
+                                <img data-imgbigurl="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh3 }}"
+                                    src="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $product->hinh3 }}"
+                                    alt="">
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -103,10 +105,8 @@
                             <i class="fa fa-star-half-o"></i>
                             <span>(18 reviews)</span>
                         </div>
-                        <div class="product__details__price">$50.00</div>
-                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
-                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                        <div class="product__details__price">{{ number_format($product->don_gia) }} VND</div>
+                        <p>{{ $product->tom_tat_san_pham }}</p>
                         <div class="product__details__quantity">
                             <div class="quantity">
                                 <div class="pro-qty">
@@ -150,62 +150,68 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
-                                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
-                                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
-                                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
-                                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
-                                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
-                                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
-                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
-                                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
-                                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
-                                        sed sit amet dui. Proin eget tortor risus.</p>
+                                    <h6>Products Details</h6>
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">Tên Sản phâm</td>
+                                                <td>{{ $product->ten_san_pham }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Tên Thương hiệu</td>
+                                                <td>{{ $product->thuong_hieu->ten_thuong_hieu }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Hệ Điều hành</td>
+                                                <td>{{ $product->he_dieu_hanh }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">SIM</td>
+                                                <td>{{ $product->sim }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">RAM</td>
+                                                <td>{{ $product->ram }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Bộ nhớ trong</td>
+                                                <td>{{ $product->bo_nho_trong }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Chip</td>
+                                                <td>{{ $product->chip }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Camera trước</td>
+                                                <td>{{ $product->camera_truoc }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Camera sau</td>
+                                                <td>{{ $product->camera_sau }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Màn hình</td>
+                                                <td>{{ $product->man_hinh }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Sản phẩm kèm theo</td>
+                                                <td>{{ $product->san_pham_kem_theo }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
-                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
-                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
-                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
-                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
-                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                                    {!! $product->chi_tiet_san_pham !!}
                                 </div>
                             </div>
+
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Products Infomation</h6>
-                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
-                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
-                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
-                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
-                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
-                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
-                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
-                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
-                                        Proin eget tortor risus.</p>
+                                    <p>I will do it later</p>
                                 </div>
                             </div>
                         </div>
@@ -227,70 +233,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg"
-                            data-setbg="{{ URL::asset('storage/ogani_resources') }}/img/product/product-1.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg"
-                            data-setbg="{{ URL::asset('storage/ogani_resources') }}/img/product/product-2.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
+                @foreach ($related_products as $item)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg"
+                                data-setbg="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $item->hinh1 }}">
+                                <ul class="product__item__pic__hover">
+                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product__item__text">
+                                <h6>
+                                    <a href="{{ url("san-pham/chi-tiet/$item->ten_url") }}">
+                                        {{ $item->ten_san_pham }}
+                                    </a>
+                                </h6>
+                                <h5>{{ number_format($item->don_gia) }} VND</h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg"
-                            data-setbg="{{ URL::asset('storage/ogani_resources') }}/img/product/product-3.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg"
-                            data-setbg="{{ URL::asset('storage/ogani_resources') }}/img/product/product-7.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

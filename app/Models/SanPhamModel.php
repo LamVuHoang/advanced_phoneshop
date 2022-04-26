@@ -15,4 +15,9 @@ class SanPhamModel extends Model
     {
         return $this->belongsTo(ThuongHieuModel::class, 'ma_thuong_hieu');
     }
+
+    public function giam_gia()
+    {
+        return $this->belongsTo(GiamGiaModel::class, 'ma_giam_gia');
+    }
 }

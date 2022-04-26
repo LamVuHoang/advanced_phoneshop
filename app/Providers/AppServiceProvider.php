@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Pagination\Paginator;
 use App\Models\LoaiSanPhamModel;
 use App\Models\ThuongHieuModel;
 use App\Models\CuaHangModel;
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Paginator::useBootstrapFour();
+
         $loai_san_pham = LoaiSanPhamModel::select('ma_loai_san_pham', 'ten_loai_san_pham')->get();
         View::share('loai_san_pham', $loai_san_pham);
 

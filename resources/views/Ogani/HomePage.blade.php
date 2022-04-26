@@ -79,7 +79,7 @@
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin -->
-    <section class="featured spad">
+    {{-- <section class="featured spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -228,8 +228,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Featured Section End -->
+
+    <div style="height: 10vh; width: 100%"></div>
 
     <!-- Banner Begin -->
     <div class="banner">
@@ -260,7 +262,7 @@
     <section class="latest-product spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
                         <h4>Sale Products</h4>
                         <div class="latest-product__slider owl-carousel">
@@ -284,14 +286,39 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
                         <h4>Android Devices</h4>
                         <div class="latest-product__slider owl-carousel">
                             @foreach ($android_products as $key)
                                 <div class="latest-prdouct__slider__item">
                                     @foreach ($key as $item)
-                                        <a href="{{ url("san-pham/$item->ten_url") }}" class="latest-product__item">
+                                        <a href="{{ url("san-pham/chi-tiet/$item->ten_url") }}"
+                                            class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $item->hinh1 }}"
+                                                    alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6>{{ $item->ten_san_pham }}</h6>
+                                                <span>{{ number_format($item->don_gia) }} VND</span>
+                                            </div>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>iOS Devices</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            @foreach ($ios_product as $key)
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach ($key as $item)
+                                        <a href="{{ url("san-pham/chi-tiet/$item->ten_url") }}"
+                                            class="latest-product__item">
                                             <div class="latest-product__item__pic">
                                                 <img src="{{ URL::asset('storage/my_resources') }}/san_pham/{{ $item->hinh1 }}"
                                                     alt="">
