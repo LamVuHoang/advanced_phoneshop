@@ -9,4 +9,9 @@ class TinTucModel extends Model
 {
     use HasFactory;
     protected $table = 'tin_tuc';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'ma_nhan_vien_dang_bai', 'id');
+    }
 }

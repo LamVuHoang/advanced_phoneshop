@@ -10,14 +10,14 @@ class SanPhamController extends Controller
     public function index()
     {
         $latest_products = SanPhamModel::select('ma_san_pham', 'ten_url', 'ten_san_pham', 'hinh1', 'don_gia')
-        ->orderBy('created_at', 'desc')->take(6)->get()->toArray();
+            ->orderBy('created_at', 'desc')->take(6)->get()->toArray();
         $sorted_latest_products = array_chunk($latest_products, 3);
 
         $sale_products = SanPhamModel::select('ma_san_pham', 'ma_giam_gia', 'ten_url', 'ten_san_pham', 'hinh1', 'don_gia')
-        ->with(['giam_gia'])->where('ma_giam_gia', '!=', null)->get();
+            ->with(['giam_gia'])->where('ma_giam_gia', '!=', null)->get();
 
         $products = SanPhamModel::select('ma_san_pham', 'ma_giam_gia', 'ten_url', 'ten_san_pham', 'hinh1', 'don_gia')
-        ->where('ma_giam_gia', null);
+            ->where('ma_giam_gia', null);
         $product_count = $products->count();
         $paginated_products = $products->paginate(6);
 
@@ -26,6 +26,8 @@ class SanPhamController extends Controller
             'products' => $paginated_products,
             'product_count' => $product_count,
             'latest_products' => $sorted_latest_products,
+            'data_max' => SanPhamModel::max('don_gia'),
+            'data_min' => SanPhamModel::min('don_gia'),
         ]);
     }
 
@@ -38,6 +40,8 @@ class SanPhamController extends Controller
         return view('Ogani.SingleProduct', [
             'product' => $product,
             'related_products' => $related_products,
+            'data_max' => SanPhamModel::max('don_gia'),
+            'data_min' => SanPhamModel::min('don_gia'),
         ]);
     }
 

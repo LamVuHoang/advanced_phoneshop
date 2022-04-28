@@ -2,7 +2,7 @@
 
 @section('title', 'Home page')
 
-@section('content')
+@section('hero-normal')
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
@@ -11,11 +11,15 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>All departments</span>
+                            <span>All Brands</span>
                         </div>
                         <ul>
-                            @foreach ($loai_san_pham as $item)
-                                <li><a href="#">{{ $item->ten_loai_san_pham }}</a></li>
+                            @foreach ($thuong_hieu as $item)
+                                <li>
+                                    <a href="{{ url("thuong-hieu/chi-tiet/$item->ma_thuong_hieu") }}">
+                                        {{ $item->ten_thuong_hieu }}
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -23,13 +27,14 @@
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
+                            <form action="{{ url('tim-kiem') }}" method="POST">
+                            @csrf
+                            <div class="hero__search__categories">
+                                All Categories
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input type="text" name="keyword" placeholder="What do you need?">
+                            <button type="submit" class="site-btn">SEARCH</button>
                             </form>
                         </div>
                         <div class="hero__search__phone">
@@ -58,7 +63,9 @@
         </div>
     </section>
     <!-- Hero Section End -->
+@endsection
 
+@section('content')
     <!-- Categories Section Begin -->
     <section class="categories">
         <div class="container">
@@ -368,7 +375,11 @@
                                     </li>
                                     {{-- <li><i class="fa fa-comment-o"></i> 5</li> --}}
                                 </ul>
-                                <h5><a href="#">{{ $item->tieu_de }}</a></h5>
+                                <h5>
+                                    <a href="{{ url("tin-tuc/chi-tiet/$item->id") }}">
+                                        {{ $item->tieu_de }}
+                                    </a>
+                                </h5>
                                 <p>{{ $item->tom_tat }}</p>
                             </div>
                         </div>

@@ -72,8 +72,12 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/san-pham') }}">Shop</a></li>
+                <li @if (url()->current() === url('/')) class="active" @endif>
+                    <a href="{{ url('/') }}">Home</a>
+                </li>
+                <li @if (url()->current() === url('/san-pham')) class="active" @endif>
+                    <a href="{{ url('/san-pham') }}">Shop</a>
+                </li>
                 <li><a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
@@ -82,14 +86,18 @@
                         <li><a href="./blog-details.html">Blog Details</a></li>
                     </ul>
                 </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li @if (url()->current() === url('/tin-tuc')) class="active" @endif>
+                    <a href="{{ url('tin-tuc')}}">Blog</a>
+                </li>
+                <li @if (url()->current() === url('/lien-he')) class="active" @endif>
+                    <a href="{{ url('/') }}">Contact</a>
+                </li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="{{ $cua_hang->facebook_url }}"><i class="fa fa-facebook"></i></a>
+            <a href="{{ $cua_hang->twitter_url }}"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-linkedin"></i></a>
             <a href="#"><i class="fa fa-pinterest-p"></i></a>
         </div>
@@ -118,8 +126,8 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="{{ $cua_hang->facebook_url }}"><i class="fa fa-facebook"></i></a>
+                                <a href="{{ $cua_hang->twitter_url }}"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
@@ -151,8 +159,12 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                            <li><a href="{{ url('/san-pham') }}">Shop</a></li>
+                            <li @if (url()->current() === url('/')) class="active" @endif>
+                                <a href="{{ url('/') }}">Home</a>
+                            </li>
+                            <li @if (url()->current() === url('/san-pham')) class="active" @endif>
+                                <a href="{{ url('/san-pham') }}">Shop</a>
+                            </li>
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="./shop-details.html">Shop Details</a></li>
@@ -161,8 +173,12 @@
                                     <li><a href="./blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li @if (url()->current() === url('/tin-tuc')) class="active" @endif>
+                                <a href="{{ url('tin-tuc') }}">Blog</a>
+                            </li>
+                            <li @if (url()->current() === url('/lien-he')) class="active" @endif>
+                                <a href="{{ url('lien-he') }}">Contact</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -182,6 +198,58 @@
         </div>
     </header>
     <!-- Header Section End -->
+
+    @section('hero-normal')
+        <!-- Hero Section Begin -->
+        <section class="hero hero-normal">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="hero__categories">
+                            <div class="hero__categories__all">
+                                <i class="fa fa-bars"></i>
+                                <span>All Brands</span>
+                            </div>
+                            <ul>
+                                @foreach ($thuong_hieu as $item)
+                                    <li>
+                                        <a href="{{ url("thuong-hieu/chi-tiet/$item->ma_thuong_hieu") }}">
+                                            {{ $item->ten_thuong_hieu }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="{{ url('tim-kiem') }}" method="POST">
+                                    @csrf
+                                    <div class="hero__search__categories">
+                                        All Categories
+                                        <span class="arrow_carrot-down"></span>
+                                    </div>
+                                    <input type="text" name="keyword" placeholder="What do you need?">
+                                    <button type="submit" class="site-btn">SEARCH</button>
+                                </form>
+                            </div>
+                            <div class="hero__search__phone">
+                                <div class="hero__search__phone__icon">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                                <div class="hero__search__phone__text">
+                                    <h5>+84 {{ $cua_hang->dien_thoai }}</h5>
+                                    <span>support 24/7 time</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
+    @show
 
     <!-- ========================
         Content Section Begin
@@ -238,9 +306,9 @@
                             <button type="submit" class="site-btn">Subscribe</button>
                         </form>
                         <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="{{ $cua_hang->facebook_url }}"><i class="fa fa-facebook"></i></a>
                             <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="{{ $cua_hang->twitter_url }}"><i class="fa fa-twitter"></i></a>
                             <a href="#"><i class="fa fa-pinterest"></i></a>
                         </div>
                     </div>

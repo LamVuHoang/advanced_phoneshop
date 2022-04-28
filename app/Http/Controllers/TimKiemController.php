@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SanPhamModel;
-use App\Models\ThuongHieuModel;
 use Illuminate\Http\Request;
+use App\Models\SanPhamModel;
 
-class ThuongHieuController extends Controller
+class TimKiemController extends Controller
 {
-    public function chi_tiet(int $ma_thuong_hieu)
+    public function index(Request $request)
     {
-        $title = ThuongHieuModel::where('ma_thuong_hieu', $ma_thuong_hieu)->value('ten_thuong_hieu');
+        return redirect()->to("tim-kiem/san-pham/$request->keyword");
+    }
+
+    public function tim_ten_san_pham(string $keyword)
+    {
+        $title = $keyword;
 
         $latest_products = SanPhamModel::select('ma_san_pham', 'ten_url', 'ten_san_pham', 'hinh1', 'don_gia')
-            ->orderBy('created_at', 'desc')->take(6)->get()->toArray();
+        ->orderBy('created_at', 'desc')->take(6)->get()->toArray();
         $sorted_latest_products = array_chunk($latest_products, 3);
 
         $products = SanPhamModel::select('ma_san_pham', 'ma_giam_gia', 'ten_url', 'ten_san_pham', 'hinh1', 'don_gia')
-            ->where('ma_thuong_hieu', $ma_thuong_hieu);
+        ->where('ten_san_pham', 'like', "%$keyword%")->orWhere('chi_tiet_san_pham', 'like', "%$keyword%");
         $product_count = $products->count();
         $paginated_products = $products->paginate(6);
 

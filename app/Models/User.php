@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $table = 'users';
+
+    public function nhan_vien()
+    {
+        return $this->hasMany(TinTucModel::class, 'ma_nhan_vien_dang_bai', 'id');
+    }
 }
